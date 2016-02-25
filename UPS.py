@@ -5,11 +5,17 @@ import time
 import subprocess
 import os.path
 
+<<<<<<< HEAD
 ChargeTotalTime=28800        #¥R¹qÁ`®É¼Æ 
 PowerOnTotalTime=54000		 #©ñ¹qÁ`®É¼Æ 
 
 
 
+=======
+ChargeTotalTime=28800        #å……é›»ç¸½æ™‚æ•¸ 
+PowerOnTotalTime=54000		 #æ”¾é›»ç¸½æ™‚æ•¸ 
+# test æ¸¬è©¦
+>>>>>>> df4af07dfa536ef8c640844d90077ad1ecd05df2
 GPIO.setmode(GPIO.BOARD)
 GPI17 = 11			# relay 1 
 GPI18 = 12			# relay 2
@@ -40,6 +46,7 @@ GPIO.setup(GPI18, GPIO.OUT)
 
 
 while True:
+<<<<<<< HEAD
 	f = open('PowerOnTime','w+')
 	if os.path.exists('PowerOnTime') == False :	#¦pªG¨S¦³PowerOnTime´N«Ø¥ß 
 	        f.write('0\n')
@@ -60,6 +67,18 @@ while True:
 	f.close
 	f = open('PowerOffTime','w+')
 	if os.path.exists('PowerOffTime') == False :	#¦pªG¨S¦³PowerOffTime´N«Ø¥ß
+=======
+	if os.path.exists('PowerOnTime') == False :	#å¦‚æžœæ²’æœ‰PowerOnTimeå°±å»ºç«‹ 
+	        f = open('PowerOnTime','w+')
+	        f.write('0\n')
+	else :
+			if f1.read() == "" :				# ç•¶ç¨‹å¼æ„å¤–ä¸­æ–·æ™‚(ex:Crtl+C)
+				f2 = open('PowerOnTime','a')	# PowerOnTime,PowerOffTimeè£¡æœƒæ²’è³‡æ–™
+				f2.write('0\n')					# ç¨‹å¼å› æ­¤æœƒError 
+				f2.close
+	if os.path.exists('PowerOffTime') == False :	#å¦‚æžœæ²’æœ‰PowerOffTimeå°±å»ºç«‹
+	        f = open('PowerOffTime','w+')
+>>>>>>> df4af07dfa536ef8c640844d90077ad1ecd05df2
 	        f.write('0\n')
 	else :
 			if f.read() == "" :
@@ -77,6 +96,7 @@ while True:
 				f2.close
 	f.close
 	
+<<<<<<< HEAD
 	f = open("PowerOffTime","r")
 	f2 = open("PowerOffTime2","r")
 	f3 = open("PowerOnTime","r")
@@ -91,6 +111,19 @@ while True:
 	if Charged == ChargeTotalTime :		#ÃB«×¥Î§¹´NÂk¹s ¤~¦³¿ìªk¤U­Ó´`Àô 
 		Charged=0
 	if Ontime == PowerOnTotalTime :
+=======
+	# tail -n 1 PowerOnTime è®€PowerOnTimeæœ€å¾Œä¸€è¡Œ    ä¸€é–‹å§‹æ˜¯æ¯ç§’éƒ½å­˜å…¥ æ‰€ä»¥æ‰é€™æ¨£å¯« 
+	fontail = subprocess.Popen(['tail','-n 1','PowerOnTime'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+	# tail -n 1 PowerOffTime è®€PowerOffTimeæœ€å¾Œä¸€è¡Œ
+	fofftail = subprocess.Popen(['tail','-n 1','PowerOffTime'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+		
+	Charged=int(fofftail.stdout.readline()) 	           	  #å·²å……é›»æ™‚æ•¸ 
+	Ontime=int(fontail.stdout.readline())				  #å·²ä½¿ç”¨æ™‚æ•¸ 
+		 
+	if Charged == ChargeTotalTime :		#é¡åº¦ç”¨å®Œå°±æ­¸é›¶ æ‰æœ‰è¾¦æ³•ä¸‹å€‹å¾ªç’° 
+		Charged=0
+	if Ontime == PowerOnTotalTime :		î­ž
+>>>>>>> df4af07dfa536ef8c640844d90077ad1ecd05df2
 		Ontime=0
 	if Charged2 == ChargeTotalTime :		#ÃB«×¥Î§¹´NÂk¹s ¤~¦³¿ìªk¤U­Ó´`Àô 
 		Charged2=0
@@ -100,6 +133,7 @@ while True:
 	count=0
 	print "Cycle... "
 	GPIO.output(GPI17, True)				
+<<<<<<< HEAD
 	GPIO.output(GPI18, True)				
 
 	if Ontime!=0
@@ -127,10 +161,27 @@ while True:
 					os.system("sudo init 0")
 			
 
+=======
+	while Ontime<PowerOnTotalTime:					#æ”¾é›»Time
+		print "å·²ä½¿ç”¨æ™‚é–“ : %r:%r:%r" % (Ontime/3600, (Ontime/60)%60, Ontime%60)
+		#time.sleep(0.1)
+		Ontime+=1
+		f = open('PowerOnTime','w+')
+		f.write("%r\n" % (Ontime))
+		f.close()
+		count+=1
+		if count%60 == 0 :
+			ping = os.system("ping -c 1 -w2 192.168.2.1 > /dev/null 2>&1")
+			if ping != 0:				#pingä¸åˆ°è·¯ç”±æ™‚ 
+				#os.system("sudo init 0")
+				TestRun()
+				
+>>>>>>> df4af07dfa536ef8c640844d90077ad1ecd05df2
 	GPIO.output(GPI17, False)
 	GPIO.output(GPI18, False)
 
 	count=0
+<<<<<<< HEAD
 
 	if Ontime!=0
 		while Ontime2<PowerOnTotalTime:					#¥R¹qTime
@@ -155,6 +206,20 @@ while True:
 				if ping != 0:				#ping¤£¨ì¸ô¥Ñ®É 
 					os.system("sudo init 0")
 
+=======
+	while Charged<ChargeTotalTime:					#å……é›»Time
+		print "å·²å……é›»æ™‚é–“ : %r:%r:%r" % (Charged/3600, (Charged/60)%60, Charged%60)
+		#time.sleep(0.1)
+		Charged+=1
+		f = open('PowerOffTime','w+')
+		f.write("%r\n" % (Charged))
+		f.close()
+		count+=1
+        if count%60 == 0 :
+        	ping = os.system("ping -c 1 -w2 192.168.2.1 > /dev/null 2>&1")
+        	if ping != 0: 
+				TestRun()
+>>>>>>> df4af07dfa536ef8c640844d90077ad1ecd05df2
 
 	GPIO.output(GPI17, True)
 	GPIO.output(GPI18, True)
