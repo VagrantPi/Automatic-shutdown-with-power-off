@@ -5,9 +5,9 @@ import time
 import subprocess
 import os.path
 
-ChargeTotalTime=28800        #¥R¹qÁ`®É¼Æ 
-PowerOnTotalTime=54000		 #©ñ¹qÁ`®É¼Æ 
-# test ¿¿
+ChargeTotalTime=28800        #å……é›»ç¸½æ™‚æ•¸ 
+PowerOnTotalTime=54000		 #æ”¾é›»ç¸½æ™‚æ•¸ 
+# test æ¸¬è©¦
 GPIO.setmode(GPIO.BOARD)
 GPI17 = 11
 GPIO.setup(GPI17, GPIO.OUT)
@@ -25,15 +25,15 @@ def TestRun() :
 
 
 while True:
-	if os.path.exists('PowerOnTime') == False :	#¦pªG¨S¦³PowerOnTime´N«Ø¥ß 
+	if os.path.exists('PowerOnTime') == False :	#å¦‚æœæ²’æœ‰PowerOnTimeå°±å»ºç«‹ 
 	        f = open('PowerOnTime','w+')
 	        f.write('0\n')
 	else :
-			if f1.read() == "" :				# ·íµ{¦¡·N¥~¤¤Â_®É(ex:Crtl+C)
-				f2 = open('PowerOnTime','a')	# PowerOnTime,PowerOffTime¸Ì·|¨S¸ê®Æ
-				f2.write('0\n')					# µ{¦¡¦]¦¹·|Error 
+			if f1.read() == "" :				# ç•¶ç¨‹å¼æ„å¤–ä¸­æ–·æ™‚(ex:Crtl+C)
+				f2 = open('PowerOnTime','a')	# PowerOnTime,PowerOffTimeè£¡æœƒæ²’è³‡æ–™
+				f2.write('0\n')					# ç¨‹å¼å› æ­¤æœƒError 
 				f2.close
-	if os.path.exists('PowerOffTime') == False :	#¦pªG¨S¦³PowerOffTime´N«Ø¥ß
+	if os.path.exists('PowerOffTime') == False :	#å¦‚æœæ²’æœ‰PowerOffTimeå°±å»ºç«‹
 	        f = open('PowerOffTime','w+')
 	        f.write('0\n')
 	else :
@@ -57,24 +57,24 @@ while True:
 	# f1.close
 	# ============================================= 
 	
-	# tail -n 1 PowerOnTime ÅªPowerOnTime³Ì«á¤@¦æ    ¤@¶}©l¬O¨C¬í³£¦s¤J ©Ò¥H¤~³o¼Ë¼g 
+	# tail -n 1 PowerOnTime è®€PowerOnTimeæœ€å¾Œä¸€è¡Œ    ä¸€é–‹å§‹æ˜¯æ¯ç§’éƒ½å­˜å…¥ æ‰€ä»¥æ‰é€™æ¨£å¯« 
 	fontail = subprocess.Popen(['tail','-n 1','PowerOnTime'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-	# tail -n 1 PowerOffTime ÅªPowerOffTime³Ì«á¤@¦æ
+	# tail -n 1 PowerOffTime è®€PowerOffTimeæœ€å¾Œä¸€è¡Œ
 	fofftail = subprocess.Popen(['tail','-n 1','PowerOffTime'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		
-	Charged=int(fofftail.stdout.readline()) 	           	  #¤w¥R¹q®É¼Æ 
-	Ontime=int(fontail.stdout.readline())				  #¤w¨Ï¥Î®É¼Æ 
+	Charged=int(fofftail.stdout.readline()) 	           	  #å·²å……é›»æ™‚æ•¸ 
+	Ontime=int(fontail.stdout.readline())				  #å·²ä½¿ç”¨æ™‚æ•¸ 
 		 
-	if Charged == ChargeTotalTime :		#ÃB«×¥Î§¹´NÂk¹s ¤~¦³¿ìªk¤U­Ó´`Àô 
+	if Charged == ChargeTotalTime :		#é¡åº¦ç”¨å®Œå°±æ­¸é›¶ æ‰æœ‰è¾¦æ³•ä¸‹å€‹å¾ªç’° 
 		Charged=0
-	if Ontime == PowerOnTotalTime :		›¶
+	if Ontime == PowerOnTotalTime :		î­
 		Ontime=0
 	
 	count=0
 	print "Starting... "
 	GPIO.output(GPI17, True)				
-	while Ontime<PowerOnTotalTime:					#©ñ¹qTime
-		print "¤w¨Ï¥Î®É¶¡ : %r:%r:%r" % (Ontime/3600, (Ontime/60)%60, Ontime%60)
+	while Ontime<PowerOnTotalTime:					#æ”¾é›»Time
+		print "å·²ä½¿ç”¨æ™‚é–“ : %r:%r:%r" % (Ontime/3600, (Ontime/60)%60, Ontime%60)
 		#time.sleep(0.1)
 		Ontime+=1
 		f = open('PowerOnTime','w+')
@@ -83,15 +83,15 @@ while True:
 		count+=1
 		if count%60 == 0 :
 			ping = os.system("ping -c 1 -w2 192.168.2.1 > /dev/null 2>&1")
-			if ping != 0:				#ping¤£¨ì¸ô¥Ñ®É 
+			if ping != 0:				#pingä¸åˆ°è·¯ç”±æ™‚ 
 				#os.system("sudo init 0")
 				TestRun()
 				
 	GPIO.output(GPI17, False)
 
 	count=0
-	while Charged<ChargeTotalTime:					#¥R¹qTime
-		print "¤w¥R¹q®É¶¡ : %r:%r:%r" % (Charged/3600, (Charged/60)%60, Charged%60)
+	while Charged<ChargeTotalTime:					#å……é›»Time
+		print "å·²å……é›»æ™‚é–“ : %r:%r:%r" % (Charged/3600, (Charged/60)%60, Charged%60)
 		#time.sleep(0.1)
 		Charged+=1
 		f = open('PowerOffTime','w+')
