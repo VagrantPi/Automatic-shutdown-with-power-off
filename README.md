@@ -1,4 +1,4 @@
-# UPS-Uninterruptible-Power-Supply-script-on-Raspberry-Pi
+# Automatic-shutdown-with-power-off
 
 固定時間ping路由器，當ping不到時自動關機
 
