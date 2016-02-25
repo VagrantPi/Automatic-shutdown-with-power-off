@@ -5,11 +5,9 @@ import time
 import subprocess
 import os.path
 
-#ChargeTotalTime=28800        #筿羆计 
-ChargeTotalTime=288        #筿羆计
-#PowerOnTotalTime=54000		 #筿羆计 
-PowerOnTotalTime=540		 #筿羆计 
-
+ChargeTotalTime=28800        #筿羆计 
+PowerOnTotalTime=54000		 #筿羆计 
+# test 靠
 GPIO.setmode(GPIO.BOARD)
 GPI17 = 11
 GPIO.setup(GPI17, GPIO.OUT)
