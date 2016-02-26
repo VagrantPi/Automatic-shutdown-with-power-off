@@ -20,3 +20,7 @@
 
     sudo python UPS.py &
 
+![github](https://github.com/VagrantPi/Automatic-shutdown-with-power-off/blob/master/picture/UPS.png)
+![github](https://github.com/VagrantPi/Automatic-shutdown-with-power-off/blob/master/picture/UPS2.png)
+![github](https://github.com/VagrantPi/Automatic-shutdown-with-power-off/blob/master/picture/UPS3.png)
+![github](https://github.com/VagrantPi/Automatic-shutdown-with-power-off/blob/master/picture/UPS4.png)
