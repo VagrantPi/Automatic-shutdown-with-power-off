@@ -8,6 +8,14 @@
 
 用GPIO18控制開關切換供給小Pi的行動電源
 
+使用前先創四個記錄檔
+
+    echo "0" > PowerOnTime
+    echo "0" > PowerOffTime
+    echo "0" > PowerOnTime2
+    echo "0" > PowerOffTime2
+
+
 請把程式放到背景直行，可按Ctrl + Z 或
 
     sudo python UPS.py &
